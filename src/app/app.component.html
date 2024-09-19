@@ -1,0 +1,43 @@
+<mat-drawer-container class="example-container" autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="side" appClickOutside (clickOutside)="drawer.close()">
+    <div class="list">
+      <ul>
+        <li>
+          <a class="drawer-link" routerLink="/dashboard" routerLinkActive="active">
+            <span class="icon">📥</span> Dashboard <span class="count"></span>
+          </a>
+        </li>
+        <li>
+          <a class="drawer-link" routerLink="/progress" routerLinkActive="active">
+            <span class="icon">📝</span> Progress <span class="count"></span>
+          </a>
+        </li>
+        <li>
+          <a class="drawer-link" routerLink="/settings" routerLinkActive="active">
+            <span class="icon">⚙️</span> Settings <span class="count"></span>
+          </a>
+        </li>
+        <!-- <li>
+          <a class="drawer-link" routerLink="/slideshow" routerLinkActive="active">
+            <span class="icon">🎞️</span> Slideshow <span class="count"></span>
+          </a>
+        </li> -->
+      </ul>
+    </div>
+    <img src="https://northernarchitecturalsystems.com/wp-content/uploads/2020/05/Northern-Architecture-.png" alt="NAS LOGO" class="bottom-image">
+  </mat-drawer>
+
+  <div class="row">
+    <button class="plus-button" type="button" mat-button (click)="drawer.toggle()" appClickOutsideIgnore>
+      <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0 0 50 50">
+        <path d="M 5 8 A 2.0002 2.0002 0 1 0 5 12 L 45 12 A 2.0002 2.0002 0 1 0 45 8 L 5 8 z M 5 23 A 2.0002 2.0002 0 1 0 5 27 L 45 27 A 2.0002 2.0002 0 1 0 45 23 L 5 23 z M 5 38 A 2.0002 2.0002 0 1 0 5 42 L 45 42 A 2.0002 2.0002 0 1 0 45 38 L 5 38 z"></path>
+        </svg>
+    </button>
+    <!-- <app-dashboard> </app-dashboard> -->
+     <!-- <app-test></app-test> -->
+      <!-- <app-progress> </app-progress> -->
+       <app-modal></app-modal>
+      <router-outlet></router-outlet>
+  </div>
+
+</mat-drawer-container>

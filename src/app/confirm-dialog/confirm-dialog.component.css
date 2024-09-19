@@ -1,0 +1,44 @@
+/* Style for the dialog title */
+.mat-dialog-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  /* Style for the dialog content */
+  .mat-dialog-content {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  
+  /* Style for the dialog actions (buttons) */
+  .mat-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .mat-dialog-actions button {
+    margin: 0 8px;
+  }
+  
+  /* Style for the 'No' button */
+  .mat-dialog-actions button:first-of-type {
+    background-color: #f44336; /* Red color */
+    color: white;
+  }
+  
+  .mat-dialog-actions button:first-of-type:hover {
+    background-color: #d32f2f; /* Darker red color */
+  }
+  
+  /* Style for the 'Yes' button */
+  .mat-dialog-actions button:last-of-type {
+    background-color: #4caf50; /* Green color */
+    color: white;
+  }
+  
+  .mat-dialog-actions button:last-of-type:hover {
+    background-color: #388e3c; /* Darker green color */
+  }
+  

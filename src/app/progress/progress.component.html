@@ -1,0 +1,172 @@
+
+<mat-tab-group>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">build</mat-icon>
+      Projects in Production
+    </ng-template>
+    <div class="card-container">
+      <div *ngFor="let project of projectsInProduction" class="card">
+        <div class="card-header">
+          <h3 class="title" [ngClass]="{'long-title': project.jobName.length > 35}">{{ project.jobName }}</h3>
+          <button (click)="markAsComplete(project.id)">
+            <span class="details">Mark as Complete</span>
+          </button>
+        </div>
+        <div class="card-body">
+          <div *ngIf="hasNonScoreErrors(project.id)" class="error-message">
+            Possible Errors
+            <mat-icon class="example-tab-icon">warning</mat-icon>        
+          </div>
+          
+          <p class="file-info">Production ID: #{{ project.productionID }}</p>
+          <div class="progress-bar">
+            <div [style.width.%]="getCumulativePercentage(project.id)" class="progress bg-blue-600 h-2.5 rounded-full"></div>
+          </div>
+          <div class="progress-info">
+            <span class="percentage">{{ getCumulativePercentage(project.id) | number: '1.0-2' }}% Complete</span>
+            <button (click)="openModal(project)">
+              <span class="details">Details</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">schedule</mat-icon>
+      Projects Scheduled
+    </ng-template>
+    <div class="card-container">
+      <div *ngFor="let project of projectsScheduled" class="card">
+        <div class="card-header">
+          <h3 class="title" [ngClass]="{'long-title': project.jobName.length > 35}">{{ project.jobName }}</h3>
+          <button (click)="markAsComplete(project.id)">
+            <span class="details">Mark as Complete</span>
+          </button>
+        </div>
+        <div class="card-body">
+          <div *ngIf="hasNonScoreErrors(project.id)" class="error-message">
+            Possible Errors
+            <mat-icon class="example-tab-icon">warning</mat-icon>        
+          </div>
+          <p class="file-info">Production ID: #{{ project.productionID }}</p>
+          <div class="progress-bar">
+            <div [style.width.%]="getCumulativePercentage(project.id)" class="progress bg-blue-600 h-2.5 rounded-full"></div>
+          </div>
+          <div class="progress-info">
+            <span class="percentage">{{ getCumulativePercentage(project.id) | number: '1.0-2' }}% Complete</span>
+            <button (click)="openModal(project)">
+              <span class="details">Details</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">trending_up</mat-icon>
+      Projects Ramping Up
+    </ng-template>
+    <div class="card-container">
+      <div *ngFor="let project of projectsRampingUp" class="card">
+        <div class="card-header">
+          <h3 class="title" [ngClass]="{'long-title': project.jobName.length > 35}">{{ project.jobName }}</h3>
+          <button (click)="markAsComplete(project.id)">
+            <span class="details">Mark as Complete</span>
+          </button>
+        </div>
+        <div class="card-body">
+          <div *ngIf="hasNonScoreErrors(project.id)" class="error-message">
+            Possible Errors
+            <mat-icon class="example-tab-icon">warning</mat-icon>        
+          </div>
+          <p class="file-info">Production ID: #{{ project.productionID }}</p>
+          <div class="progress-bar">
+            <div [style.width.%]="getCumulativePercentage(project.id)" class="progress bg-blue-600 h-2.5 rounded-full"></div>
+          </div>
+          <div class="progress-info">
+            <span class="percentage">{{ getCumulativePercentage(project.id) | number: '1.0-2' }}% Complete</span>
+            <button (click)="openModal(project)">
+              <span class="details">Details</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">assignment</mat-icon>
+      Pilots & Samples
+    </ng-template>
+    <div class="card-container">
+      <div *ngFor="let project of pilotsAndSamples" class="card">
+        <div class="card-header">
+          <h3 class="title" [ngClass]="{'long-title': project.jobName.length > 35}">{{ project.jobName }}</h3>
+          <p class="file-info"> - - - </p>
+        </div>
+        <div class="card-body">
+          <p class="file-info">Production ID: #{{ project.productionID }}</p>
+          <div class="progress-bar">
+            <div [style.width.%]="getCumulativePercentage(project.id)" class="progress bg-blue-600 h-2.5 rounded-full"></div>
+          </div>
+          <div class="progress-info">
+            <span class="percentage">{{ getCumulativePercentage(project.id) | number: '1.0-2' }}% Complete</span>
+            <button (click)="openModalSample(project)">
+              <span class="details">Details</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">list</mat-icon>
+      Total Projects
+    </ng-template>
+    <div class="filter-container">
+      <mat-form-field appearance="fill">
+        <mat-label>Filter by Customer</mat-label>
+        <mat-select [(value)]="selectedCustomer" (selectionChange)="filterProjectsByCustomer()">
+          <mat-option *ngFor="let customer of uniqueCustomers" [value]="customer">{{ customer }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="card-container">
+      <div *ngFor="let project of filteredTotalProjects" class="card">
+        <div class="card-header">
+          <h3 class="title" [ngClass]="{'long-title': project.jobName.length > 35}">{{ project.jobName }}</h3>
+          <button (click)="markAsUncomplete(project.id)">
+            <span class="details"> Remove from Completed </span>
+          </button>
+        </div>
+        <div class="card-body">
+          <div *ngIf="hasNonScoreErrors(project.id)" class="error-message">
+            Possible Errors
+            <mat-icon class="example-tab-icon">warning</mat-icon>        
+          </div>
+          <p class="file-info">Production ID: #{{ project.productionID }}</p>
+          <div class="progress-bar">
+            <div [style.width.%]="getCumulativePercentage(project.id)" class="progress bg-blue-600 h-2.5 rounded-full"></div>
+          </div>
+          <div class="progress-info">
+            <span class="percentage">{{ getCumulativePercentage(project.id) | number: '1.0-2' }}% Complete</span>
+            <button (click)="openModalSample(project)">
+              <span class="details">Details</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+</mat-tab-group>
+<app-modal></app-modal>
+

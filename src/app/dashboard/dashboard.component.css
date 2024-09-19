@@ -1,0 +1,649 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+html, body {
+  overflow: hidden; /* Prevents scrolling in both directions */
+  height: 100%; /* Ensures the body takes full height */
+  margin: 0; /* Removes default margin */
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100vh;
+  } 
+  
+  .example-sidenav-content {
+    border: 1px solid black; 
+    width: 65px;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+  }
+    
+  .example-container {
+    width: 100vw;
+    height: 95%; 
+    /*border: 1px solid rgba(0, 0, 0, 0.5);*/
+    display: flex;
+    flex-direction: row; 
+  }
+  .other-container {
+    height: 70%;
+    padding: 20px;
+    margin-left: 3vw;
+    display: flex;
+    flex-direction: row;
+    gap: 2vw;
+    display: flex;
+    flex-flow: row;
+  }
+  
+  .warning-text{
+    color: red;
+    font-size: x-small;
+  }
+  .warning {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .stats {
+    /*border: 1px solid blue;*/
+    display: flex;
+    justify-content: space-evenly;
+    padding: 20px; 
+    width: 100%;
+    align-items: start;
+    flex-wrap:wrap;
+    gap: 10px;
+  }
+
+  .stat-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    width: calc(28% - 40px); 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 30px;
+    font-family: "Raleway", sans-serif;
+    border-color:rgba(0, 0, 0, 0.2);
+    border-style: solid;
+    border-width: 1px;
+  }
+  
+  .stat-text {
+    font-size: 8px;
+    color: #555;
+    align-items: center;
+    text-align: center;
+    display: flex;
+  }
+
+  .tooltip {
+    visibility: hidden;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position above the svg */
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    width: 120px;
+  }
+  
+  .tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%; /* At the bottom of the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+  }
+  
+  .stat-text:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  .stat-number {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    margin-toP: 20px;
+  }
+  
+  .card-container {
+    /*border: 1px solid red;*/
+    display: flex;
+    flex-wrap: wrap; 
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 100vw;
+    height: 100vh;
+    background-color: #D1DBE0;
+    overflow: hidden;
+  }
+  
+  .delivery-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: calc(79% - 39px); 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+    height: auto;
+  }
+  .models-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    width: 45% ; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: auto;
+    border-color:rgba(0, 0, 0, 0.2);
+    border-style: solid;
+    border-width: 1px;
+  }
+
+  .stat-text {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .chart-container {
+    display: flex;
+    gap: 5vw;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+  }
+  
+  .chart {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    width: 150px;
+    position: relative;
+  }
+  
+  .bar {
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    position: relative;
+    margin-top: 2px;
+    border-radius: 10px;
+  }
+  
+  .bar span {
+    position: absolute;
+    color: #fff;
+    font-size: 12px;
+    bottom: 0;
+  }
+  
+  .models-text {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 10px;
+  }
+
+  thead th,
+tfoot th {
+  font-size: medium;
+}
+
+th, td {
+  padding: 15px; /* Adjust the padding as needed */
+  text-align: left; /* Optional: aligns text to the left */
+  border-bottom: 1px solid #ddd; /* Optional: adds a bottom border to cells */
+}
+
+th {
+  letter-spacing: 2px;
+}
+
+td {
+  letter-spacing: 1px;
+}
+
+tbody td {
+  text-align: center;
+}
+
+tfoot th {
+  text-align: right;
+}
+  
+  
+  .notifs-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    width: 45%; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+    overflow-x: auto;
+    border-color:rgba(0, 0, 0, 0.2);
+    border-style: solid;
+    border-width: 1px;
+    position: relative;
+  }
+
+  .table-container {
+    max-width: 100%;
+    width: 90%;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: auto;
+  }
+  
+  .project-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .project-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .project-jobName {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .project-details {
+    display: flex;
+    align-items: center;
+  }
+  
+  .project-details span {
+    margin-right: 5px;
+  }
+  
+  .project-details .icon {
+    color: #999;
+  }
+  
+  .project-status {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .project-status.bad {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+
+  .project-status.warning {
+    background-color: #f7e5bc;
+    color: #fcad03;
+  }
+  
+  .project-status.good {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  
+
+  .example-sidenav {
+    padding: 20px;
+    background-color: cornflowerblue;
+  }
+
+  .plus-button {
+    display: inline-flex;
+    align-items: flex-end;
+    justify-content: center;
+    color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  
+  .plus-button:hover {
+    background-color: transparent; 
+    transform: scale(1.1); 
+  } 
+
+  .sort-button {
+    width: 30px;
+    height: 30px;
+    margin: 5px; /* Add some margin to separate the buttons */
+    background-color: #004dff;
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 2px 2px 3px #999;
+    z-index: 100;
+    border: #004dff;
+    transition: 0.5s;
+  }
+  
+  .sort-button:hover {
+    transform: scale(1.1);
+  }
+  
+  .sort-button:active {
+    background-color: #020cd1;
+  }
+  
+  .arrow-up, .arrow-down {
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+  }
+  
+  .arrow-up {
+    border-bottom: 12px solid white;
+  }
+  
+  .arrow-down {
+    border-top: 12px solid white;
+    margin-top: 20%; /* Adjust margin for better alignment */
+  }
+
+  .hide-btn {
+    background-color: #eee;
+    border: none;
+    padding: 1rem;
+    font-size: 1rem;
+    width: 39vw;
+    height: 2vh;
+    border-radius: 1rem;
+    color: black;
+    box-shadow: 0 0.4rem #dfd9d9;
+    display: flex; /* Use Flexbox */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+   }
+   
+   button:active {
+    color: white;
+    box-shadow: 0 0.2rem #e3d5ca;
+    transform: translateY(0.2rem);
+   }
+   
+   
+   button:disabled {
+    cursor: auto;
+    color: grey;
+   }
+   
+   .grids {
+    display: flex; 
+    flex-direction: row;
+    gap: 0.5vw;
+    height: 80%;
+    /*border: 1px solid black;*/
+    overflow-y: auto;
+    width: 95%;
+   }
+
+   .grid-section {
+    flex: 1;
+    /* border: 1px solid red; */
+    width: 9.5vw;
+    align-items: center;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+  }
+
+   .grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 0.5em;
+    margin-top: 2vh;
+    color: white; 
+    padding: 2px;
+    cursor: pointer;
+  }
+  
+  .grid-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #75d69d;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    width: 50px;
+    height: 25px;
+    transition: background-color 0.3s ease; /* Smooth transition */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add box shadow */
+  }
+
+  .grid-details {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    border-top: 1px solid #ccc;
+    padding-top: 20px;
+    width: 90%;
+  }
+
+  .pilot-outline {
+    outline: 2px dashed rgba(0, 0, 0, 0.49); /* Adjust the style and color as needed */
+  }
+  
+  .errors-section {
+    width: 30%;
+  }
+
+  .errors-section ul {
+    list-style-type: none;
+    padding-left: 0; /* To remove any default padding */
+    border: 1px solid black;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+  
+  .errors-section ul li {
+    margin-bottom: 5px; /* Optional: add some space between list items */
+  }
+
+  .error-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 5px;
+    width: 280px;
+  }
+
+  .error-checkbox {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #5cb85c; /* Green border color for default */
+    border-radius: 3px;
+    background-color: #f9f9f9;
+    position: relative;
+    margin-right: 15px;
+    flex-shrink: 0; /* Prevent the checkbox from shrinking */
+  }
+  
+  .error-checkbox.no-error:checked {
+    background-color: #5cb85c; /* Green background color when no error */
+  }
+
+  
+  .error-checkbox.error {
+    border-color: #d9534f; /* Red border color for error */
+    background-color: #f9f9f9; /* Keep the default background color for error */
+  }
+  
+  .error-checkbox.error:checked {
+    background-color: #d9534f; /* Red background color when error */
+    
+  }
+  .error-checkbox.no-error::before {
+    content: "+";
+    color: white; /* White color for the + sign */
+    background-color: #5cb85c; /* Green background color for no error */
+    font-size: 16px;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .error-checkbox.no-error {
+    border-color: #5cb85c; /* Green border color for no error */
+    background-color: #5cb85c; /* Green background color for no error */
+  }
+  
+  
+  .error-checkbox.error:checked::before {
+    content: "-";
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .error-details {
+    --button_radius: 0.5em;
+    --button_color: #e8e8e8;
+    --button_outline_color: #000000;
+    font-size: 12px;
+    font-weight: bold;
+    border: none;
+    border-radius: var(--button_radius);
+    background: white;
+    display: block;
+    box-sizing: border-box;
+    border: 1px solid var(--button_outline_color);
+    border-radius: var(--button_radius);
+    padding: 0.75em 1.5em;
+    background: white;
+    color: var(--button_outline_color);
+    transform: translateY(-0.2em);
+    transition: transform 0.1s ease;
+  }
+  
+  .project-info-section {
+    width: 60%;
+  }
+
+  .project-info-box {
+    border: 1px solid black;
+    padding: 5px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: white; /* Optional: Add a background color for better visibility */
+    width: auto;
+  }
+  
+  .project-info-box p {
+    margin: 0; /* Remove default margin from <p> elements */
+  }
+
+  .score-box {
+    margin-top: 20px;
+  }
+  
+  .score-item {
+    padding: 5px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 16px;
+    border: 1px solid black;
+  }
+
+  .grid-item:hover {
+    transform: translate(0px, -4px) rotate(1deg);
+    }
+
+  .slider {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background: none; /* Remove background */
+    border: none; /* Remove border */
+    padding: 0; /* Remove padding */
+    cursor: pointer; /* Change cursor to pointer */
+  }
+
+  .slider svg {
+    display: block; /* Ensure SVG takes full space of the button */
+    width: 36px; /* Adjust size as needed */
+    height: 36px; /* Adjust size as needed */
+  }
+
+  ::ng-deep .mat-mdc-text-field-wrapper {
+    width: 1000px; /* Make the form field full width */
+    margin: 10px 0; /* Optional: add some margin */
+  }
+  
+  ::ng-deep .custom-form-field .mat-form-field-flex {
+    background-color: #f0f0f0; /* Change the background color */
+    border-radius: 4px; /* Optional: add border radius */
+  }
+  
+  .stat-text::-webkit-scrollbar {
+    display: none;
+  }
+
+  .notifs-card::-webkit-scrollbar {
+    display: none;
+  }
+
+  .card-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .grids::-webkit-scrollbar {
+    display: none;
+  }

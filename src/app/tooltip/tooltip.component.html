@@ -1,0 +1,14 @@
+<div class="tooltip" [ngClass]="{ 'tooltip-visible': visible }">
+    <div class="color-bar">
+        <div class="color-swatch" *ngFor="let color of colors" [style.background-color]="color.hex">
+        </div>
+    </div>
+    <div class="color-info">
+        <div class="color-item" *ngFor="let color of colors">
+            <h5>                 {{color.name}} </h5>
+            <a class="info">     {{color.info}} </a>
+        </div>
+    </div>
+</div>
+
+  

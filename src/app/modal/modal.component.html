@@ -1,0 +1,122 @@
+<div class="modal" *ngIf="isVisible">
+  <div class="modal-content">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <div class="modal-container">
+      <div class="units-section">
+        <h2>Units</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>To Be Produced</th>
+              <th>Received Quantity</th>
+              <th>Made Quantity</th>
+              <th>Not Assigned</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let unit of project?.units">
+              <td>{{ unit.model }}</td>
+              <td>{{ unit.toBeProduced }}</td>
+              <td>{{ unit.receivedQuantity }}</td>
+              <td>{{ unit.madeQuantity }}</td>
+              <td>{{ unit.notAssigned }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div *ngIf="project && errorMessages[project.id]?.length" class="error-message">
+          <ul>
+            <li *ngFor="let error of errorMessages[project.id]">{{ getErrorMessage(error) }}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="details-section">
+        <h2>Project Details</h2>
+        <div class="detail-item">
+          <p><strong>Job Name:</strong> {{ project?.jobName }}</p>
+        </div>
+        <div class="detail-item">
+          <p><strong>Production ID:</strong> {{ project?.productionID }}</p>
+        </div>
+        <div class="detail-item">
+          <p><strong>Customer:</strong> {{ project?.customer }}</p>
+        </div>
+        <div class="detail-item">
+          <p><strong>Sales Rep:</strong> {{ project?.salesRep }}</p>
+        </div>
+        <div class="detail-item">
+          <p><strong>Finish:</strong> {{ project?.finish }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="materials-section">
+      <div class="timeline-grid">
+        <div class="timeline">
+          <h4>Aluminum</h4>
+          <ul>
+            <ng-container *ngFor="let al of project?.aluminum">
+              <li [ngStyle]="{'--accent-color': getCircleColor(al.dueDate, al.status)}">
+                <div class="date">Order {{ al.orderNumber }}</div>
+                <div class="title">{{ formatDate(al.orderDate) }}</div>
+                <div class="descr">
+                  <strong>Due Date:</strong> {{ formatDueDate(al.dueDate) }}<br>
+                  <strong>Status:</strong> {{ formatStatus(al.status) }}
+                </div>
+              </li>
+            </ng-container>
+          </ul>
+        </div>
+        <div class="timeline">
+          <h4>Hardware</h4>
+          <ul>
+            <ng-container *ngFor="let hw of project?.hardware">
+              <li [ngStyle]="{'--accent-color': getCircleColor(hw.dueDate, hw.status)}">
+                <div class="date">Order {{ hw.orderNumber }}</div>
+                <div class="title">{{ formatDate(hw.orderDate) }}</div>
+                <div class="descr">
+                  <strong>Due Date:</strong> {{ formatDueDate(hw.dueDate) }}<br>
+                  <strong>Status:</strong> {{ formatStatus(hw.status) }}
+                </div>
+              </li>
+            </ng-container>
+          </ul>
+        </div>
+        <div class="timeline">
+          <h4>Glass</h4>
+          <ul>
+            <ng-container *ngFor="let gl of project?.glass">
+              <li [ngStyle]="{'--accent-color': getCircleColor(gl.dueDate, gl.status)}">
+                <div class="date">Order</div>
+                <div class="title">{{ formatDate(gl.orderDate) }}</div>
+                <div class="descr">
+                  <strong>Due Date:</strong> {{ formatDueDate(gl.dueDate) }}<br>
+                  <strong>Status:</strong> {{ formatStatus(gl.status) }}
+                </div>
+              </li>
+            </ng-container>
+          </ul>
+        </div>
+      </div>
+
+      <div class="production-dates" *ngIf="productionDates.length > 0">
+        <h3>Production Dates</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Date to be Produced</th>
+              <th *ngFor="let model of uniqueModels">{{ model }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let date of getGroupedDatesKeys()">
+              <td>{{ date }}</td>
+              <td *ngFor="let model of uniqueModels">{{ groupedDates[date][model] || 0 }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      
+</div>
+

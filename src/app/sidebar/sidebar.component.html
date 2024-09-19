@@ -1,0 +1,23 @@
+<div class="sidebar" [class.collapsed]="isCollapsed">
+    <div class="sidebar-header">
+      <div class="logo">
+        <img src="../../images/nas.png" alt="Logo" />
+      </div>
+      <input type="text" placeholder="Search here" class="search-input" />
+    </div>
+    <ul class="nav-links">
+      <li><a routerLink="/" routerLinkActive="active">Dashboard</a></li>
+      <li><a routerLink="/tickets" routerLinkActive="active">Section</a></li>
+      <li><a routerLink="/agents" routerLinkActive="active">Section</a></li>
+      <li><a routerLink="/customers" routerLinkActive="active">Section</a></li>
+      <li><a routerLink="/products" routerLinkActive="active">Section</a></li>
+      <li><a routerLink="/orders" routerLinkActive="active">Section</a></li>
+      <li><a routerLink="/reports" routerLinkActive="active">Section</a></li>
+    </ul>
+    <div class="user-profile">
+      <img src="assets/user.png" alt="User" />
+      <span>Jacob Jones</span>
+    </div>
+    <button class="toggle-btn" (click)="toggleSidebar()">Toggle</button>
+  </div>
+  

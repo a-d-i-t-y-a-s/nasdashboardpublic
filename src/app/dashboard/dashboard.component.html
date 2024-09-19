@@ -1,0 +1,232 @@
+<div class="card-container">
+  <div class="stats">
+    <div class="stat-card">
+      <div class="stat-number"> 
+          {{ projectsScheduled.length + productionProjects + projectsRampingUp.length}} 
+    </div>
+    <div class="stat-text">Total Active Projects</div>
+      <a class="warning-text"></a>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number"> {{sampleProjectsLength}}</div>
+      <div class="stat-text">Active Pilots/Samples</div>
+      <a class="warning-text"></a>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number"> {{ totalUniqueCustomers }} </div>
+      <div class="stat-text">Customers/Clients/Installers</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number"> {{ productionProjects }} </div>
+      <div class="stat-text">Currently in Production </div>
+      <a class="warning-text"></a>
+    </div>
+    <div class="stat-card">
+      <!-- <div class="stat-number"> {{ projectsScheduledArray.length }}</div> -->
+      <div class="stat-number"> 1 </div>
+      <div class="stat-text">Scheduled for Production</div>
+      <div class="warning">
+        <!-- <?xml version="1.0" ?><!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.0//EN'  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'><svg height="32" style="overflow:visible;enable-background:new 0 0 32 32" viewBox="0 0 32 32" width="32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><g id="Error_1_"><g id="Error"><circle cx="16" cy="16" id="BG" r="16" style="fill:#D72828;"/><path d="M14.5,25h3v-3h-3V25z M14.5,6v13h3V6H14.5z" id="Exclamatory_x5F_Sign" style="fill:#E6E6E6;"/></g></g></g></svg> -->
+        <!-- <a class="warning-text"> There are Active Projects missing </a> -->
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number"> {{ projectsRampingUp.length }} </div>
+      <div class="stat-text">Ramping Up Projects</div>
+    </div>
+  </div>
+  <div class="other-container">
+    <div class="models-card">
+      <div class="stat-text">
+        Projects Overview
+        <svg id="info-icon" xmlns="http://www.w3.org/2000/svg" height="25px" viewBox="0 -960 960 960" width="25px" fill="#5f6368"
+          (mouseenter)="handleMouseEnter('nullProjectIDS'); handleMouseEnter('notAssignedDataDetails'); handleMouseEnter('errorMessages'); tooltip.show();" (mouseleave)="tooltip.hide()">
+          <path d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/>
+        </svg>
+      <app-tooltip #tooltip text="Info about projects overview"></app-tooltip>
+      </div>
+      <div class="grids">
+        <div class="grid-section">
+          <a>Projects ramping up</a>
+          <div class="grid-container">
+            <div *ngFor="let project of projectsRampingUp; let i = index" 
+                 class="grid-item" 
+                 (click)="showProjectDetails(project)"
+                 [ngClass]="{'pilot-outline': hasPilotJobName(project)}"
+                 [style.backgroundColor]="getProjectColor(project)">
+              #{{project.productionID}}
+              
+            </div>
+          </div>
+        </div>
+        
+        <div class="grid-section">
+          <a>Projects scheduled</a>
+          <div class="grid-container">
+            <div *ngFor="let project of projectsScheduled; let i = index" 
+                 class="grid-item" 
+                 (click)="showProjectDetails(project)"
+                 [ngClass]="{'pilot-outline': hasPilotJobName(project)}"
+                 [style.backgroundColor]="getProjectColor(project)">
+              <!-- Empty content, just the box -->
+              #{{project.productionID}}
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-section">
+          <a>Projects in production</a>
+          <div class="grid-container">
+            <div *ngFor="let project of projectsInProduction; let i = index" 
+                 class="grid-item" 
+                 (click)="showProjectDetails(project)"
+                 [style.backgroundColor]="getProjectColor(project)">
+              <!-- Empty content, just the box -->
+               #{{project.productionID}}
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="grid-details">
+        <div class="errors-section" >
+          <div class="error-boxes">
+            <div class="error-item">
+              <input type="checkbox" class="error-checkbox" [ngClass]="{'error': isError('MISSING ID/PROD #'), 'no-error': !isError('MISSING ID/PROD #')}" [checked]="isError('MISSING ID/PROD #')" disabled>
+              <label>{{ getLabel('MISSING ID', 'Missing ID/Production #', 'Production # and ID ✔️') }}</label>
+            </div>
+            <div class="error-item">
+              <input type="checkbox" class="error-checkbox" [ngClass]="{'error': isError('MISSING BOM'), 'no-error': !isError('MISSING BOM')}" [checked]="isError('MISSING BOM')" disabled>
+              <label>{{ getLabel('MISSING BOM', 'Missing BOM', 'BOM Done & Ordered ✔️') }}</label>
+            </div>
+            <div class="error-item">
+              <input type="checkbox" class="error-checkbox" [ngClass]="{'error': isError('UNITS NOT ASSIGNED'), 'no-error': !isError('UNITS NOT ASSIGNED')}" [checked]="isError('UNITS NOT ASSIGNED')" disabled>
+              <label>{{ getLabel('UNITS NOT ASSIGNED', 'Units Not Assigned', 'All Units Assigned ✔️') }} {{ getUnitsNotAssignedCount() > 0 ? '(' + getUnitsNotAssignedCount() + ')' : '' }}</label>
+            </div>
+            <div class="error-item">
+              <input type="checkbox" class="error-checkbox" [ngClass]="{'error': isError('ORDER DATE PASSED'), 'no-error': !isError('ORDER DATE PASSED')}" [checked]="isError('ORDER DATE PASSED')" disabled>
+              <label>{{ getLabel('ORDER DATE PASSED', 'Order Date Passed', 'No Late Orders ✔️') }}</label>
+            </div>
+            <div class="score-box">
+              <div class="score-item">
+                  <label>Score: {{ score }}</label>
+              </div>
+          </div>
+          <mat-form-field appearance="fill">
+            <mat-label>Profile name </mat-label>
+            <mat-select [(value)]="profileName" (selectionChange)="onProfileNameChange($event.value)">
+              <!-- Assuming you have a list of table IDs to choose from -->
+              <mat-option *ngFor="let name of profileNames" [value]="name">
+                {{ name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field> 
+            <button *ngIf="hoveredProject" class="error-details" (click)="goToProgress(hoveredProject.productionID, hoveredProject.projectID)">View Details</button>
+          </div>
+        </div>
+        <div class="project-info-section">
+          <div class="project-info-box">
+            <p>Project Name: {{hoveredProject ? hoveredProject.jobName : ' '}}</p>
+          </div>
+          <div class="project-info-box">
+            <p>Production ID: {{hoveredProject ? hoveredProject.productionID : ' '}}</p>
+          </div>
+          <div class="project-info-box">
+            <p>Project ID: {{hoveredProject ? hoveredProject.projectID : ' '}}</p>
+          </div>
+          <div class="project-info-box">
+            <p>Customer: {{hoveredProject ? hoveredProject.customer : ' '}}</p>
+          </div>
+          <!-- Add more details as needed -->
+          
+        </div>
+      </div>
+    </div>
+    
+    <div class="notifs-card" >
+      <div class="table-container" *ngIf="!sliderChecked!">
+        <button class="hide-btn" (click)="toggleTable('nullProjectIDS')">
+          {{ isTableVisible('nullProjectIDS') ? 'Hide' : 'Show' }} Null Project IDs or Production #'s
+          <span style="color: red;">: ({{ getNullProjectIDSCount() }})</span>
+        </button>
+        <div *ngIf="isTableVisible('nullProjectIDS')">
+          <div *ngFor="let project of nullProjectIDS" class="project-row">
+            <div class="project-info">
+              <div class="project-jobName">{{ project.jobName }}</div>
+              <div class="project-details">
+                <span>Project ID: #{{ project.projectID }}</span>
+                <span class="icon">•</span>
+                <span>Production ID: {{ project.productionID }}</span>
+                <span class="icon">•</span>
+                <span>{{ project.customer }}</span>
+              </div>
+              <div class="project-details">
+                <span> Assigned to: Stacey</span>
+              </div>
+            </div>
+            <div class="project-status bad">
+              MISSING ID
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="table-container" *ngIf="!sliderChecked">
+        <button class="hide-btn" (click)="toggleTable('notAssignedDataDetails')">
+          {{ isTableVisible('notAssignedDataDetails') ? 'Hide' : 'Show' }} Not Assigned Data Details
+          <span style="color: red;">: ({{ getNotAssignedDataDetailsCount() }})</span>
+        </button>
+        <div *ngIf="isTableVisible('notAssignedDataDetails')">
+          <div *ngFor="let project of notAssignedDataDetails" class="project-row">
+            <div class="project-info">
+              <div class="project-jobName">{{ project.jobName }}</div>
+              <div class="project-details">
+                <span>Project ID: #{{ project.projectID }}</span>
+                <span class="icon">•</span>
+                <span>Production ID: {{ project.productionID }}</span>
+                <span class="icon">•</span>
+                <span>{{ project.customer }}</span>
+              </div>
+              <div class="project-details">
+                <span>Assigned to: Production Team</span>
+              </div>
+            </div>
+            
+            <div [ngClass]="project.toBeProduced > 100 ? 'project-status bad' : 'project-status warning'">
+              {{project.toBeProduced}} UNITS MISSING IN PROD.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-container" *ngIf="!sliderChecked">
+        <button class="hide-btn" (click)="toggleTable('errorMessages')">
+          {{ isTableVisible('errorMessages') ? 'Hide' : 'Show' }} Confirmed  Projects With Missing BOM
+          <span style="color: red;">: ({{ getErrorMessagesCount() }})</span>
+        </button>
+        <div *ngIf="isTableVisible('errorMessages')">
+          <div *ngFor="let project of getErrorProjects()" class="project-row">
+            <div class="project-info">
+              <div class="project-jobName">{{ project.jobName }}</div>
+              <div class="project-details">
+                <span>Project ID: #{{ project.projectID }}</span>
+                <span class="icon">•</span>
+                <span>Production ID: {{ project.productionID }}</span>
+                <span class="icon">•</span>
+                <span>{{ project.customer }}</span>
+              </div>
+              <div class="project-details">
+                <span>Assigned to: Purchasing Department</span>
+              </div>
+            </div>
+            <div class="project-status bad">
+              MISSING BOM
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="slider" (click)="reloadColors()">
+        <svg xmlns="http://www.w3.org/2000/svg" height="36px" viewBox="0 -960 960 960" width="36px" fill="#5f6368"><path d="M480-280q-73 0-127.5-45.5T284-440h62q13 44 49.5 72t84.5 28q58 0 99-41t41-99q0-58-41-99t-99-41q-29 0-54 10.5T382-580h58v60H280v-160h60v57q27-26 63-41.5t77-15.5q83 0 141.5 58.5T680-480q0 83-58.5 141.5T480-280ZM200-120q-33 0-56.5-23.5T120-200v-160h80v160h160v80H200Zm400 0v-80h160v-160h80v160q0 33-23.5 56.5T760-120H600ZM120-600v-160q0-33 23.5-56.5T200-840h160v80H200v160h-80Zm640 0v-160H600v-80h160q33 0 56.5 23.5T840-760v160h-80Z"/></svg>
+      </button>
+  </div>
+</div>
